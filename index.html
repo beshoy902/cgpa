@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total GPA Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #f7f7f7;
+        }
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .semester {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .semester label {
+            flex: 1;
+        }
+        .semester input {
+            flex: 2;
+            padding: 5px;
+            margin-left: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .add-semester, .calculate {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .add-semester:hover, .calculate:hover {
+            background: #0056b3;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Total GPA Calculator</h1>
+        <div id="semesters">
+            <div class="semester">
+                <label for="gpa1">Semester 1 GPA:</label>
+                <input type="text" id="gpa1" class="gpa" placeholder="Enter GPA" oninput="validateInput(this)">
+            </div>
+            <div class="semester">
+                <label for="gpa2">Semester 2 GPA:</label>
+                <input type="text" id="gpa2" class="gpa" placeholder="Enter GPA" oninput="validateInput(this)">
+            </div>
+        </div>
+        <button class="add-semester" onclick="addSemester()">Add Semester</button>
+        <button class="calculate" onclick="calculateGPA()">Calculate Cumulative GPA</button>
+        <div class="result" id="result"></div>
+    </div>
+    <footer>&copy; 2024 Beshoy Ashraf. All rights reserved.</footer>
+
+    <script>
+        let semesterCount = 2;
+
+        function addSemester() {
+            semesterCount++;
+            const semestersDiv = document.getElementById('semesters');
+            const newSemesterDiv = document.createElement('div');
+            newSemesterDiv.className = 'semester';
+            newSemesterDiv.innerHTML = `
+                <label for="gpa${semesterCount}">Semester ${semesterCount} GPA:</label>
+                <input type="text" id="gpa${semesterCount}" class="gpa" placeholder="Enter GPA" oninput="validateInput(this)">
+            `;
+            semestersDiv.appendChild(newSemesterDiv);
+        }
+
+        function validateInput(input) {
+            input.value = input.value.replace(/[^0-9.]/g, '');
+        }
+
+        function calculateGPA() {
+            const gpaInputs = document.querySelectorAll('.gpa');
+            let totalGPA = 0;
+            let validInputCount = 0;
+
+            for (let input of gpaInputs) {
+                const gpaValue = parseFloat(input.value);
+                if (!isNaN(gpaValue)) {
+                    totalGPA += gpaValue;
+                    validInputCount++;
+                }
+            }
+
+            if (validInputCount === 0) {
+                document.getElementById('result').innerText = "Please enter at least one GPA.";
+            } else {
+                const cumulativeGPA = totalGPA / validInputCount;
+                document.getElementById('result').innerText = `Cumulative GPA: ${cumulativeGPA.toFixed(2)}`;
+            }
+        }
+    </script>
+</body>
+</html>
