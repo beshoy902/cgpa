@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Total GPA Calculator</title>
+    <title>Cumulative GPA Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,7 +13,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             background: #f7f7f7;
         }
         .container {
@@ -23,13 +23,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 90%;
             max-width: 500px;
+            text-align: center;
         }
         h1 {
-            text-align: center;
             margin-bottom: 20px;
         }
         .semester {
             display: flex;
+            justify-content: space-between;
             margin-bottom: 10px;
         }
         .semester label {
@@ -42,11 +43,15 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .add-semester, .calculate {
-            display: block;
-            width: 100%;
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-group button {
+            flex: 1;
             padding: 10px;
-            margin-top: 10px;
+            margin: 0 5px;
             background: #007bff;
             color: #fff;
             border: none;
@@ -54,8 +59,23 @@
             cursor: pointer;
             text-align: center;
         }
-        .add-semester:hover, .calculate:hover {
-            background: #0056b3;
+
+        .button-group button:hover {
+            opacity: 0.8;
+        }
+        .calculate {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .calculate:hover {
+            opacity: 0.8;
         }
         .result {
             text-align: center;
@@ -71,7 +91,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Total GPA Calculator</h1>
+        <h1>Cumulative GPA Calculator</h1>
         <div id="semesters">
             <div class="semester">
                 <label for="gpa1">Semester 1 GPA:</label>
@@ -82,25 +102,42 @@
                 <input type="text" id="gpa2" class="gpa" placeholder="Enter GPA" oninput="validateInput(this)">
             </div>
         </div>
-        <button class="add-semester" onclick="addSemester()">Add Semester</button>
+        <div class="button-group">
+            <button class="add-semester" onclick="addSemester()">Add Semester</button>
+            <button class="remove-semester" onclick="removeSemester()">Remove Semester</button>
+        </div>
         <button class="calculate" onclick="calculateGPA()">Calculate Cumulative GPA</button>
         <div class="result" id="result"></div>
     </div>
-    <footer>&copy; 2024 Beshoy Ashraf. All rights reserved.</footer>
+    <footer>&copy; 2024 Beshoy Ashraf</footer>
 
     <script>
         let semesterCount = 2;
 
         function addSemester() {
-            semesterCount++;
-            const semestersDiv = document.getElementById('semesters');
-            const newSemesterDiv = document.createElement('div');
-            newSemesterDiv.className = 'semester';
-            newSemesterDiv.innerHTML = `
-                <label for="gpa${semesterCount}">Semester ${semesterCount} GPA:</label>
-                <input type="text" id="gpa${semesterCount}" class="gpa" placeholder="Enter GPA" oninput="validateInput(this)">
-            `;
-            semestersDiv.appendChild(newSemesterDiv);
+            if (semesterCount < 10) {
+                semesterCount++;
+                const semestersDiv = document.getElementById('semesters');
+                const newSemesterDiv = document.createElement('div');
+                newSemesterDiv.className = 'semester';
+                newSemesterDiv.innerHTML = `
+                    <label for="gpa${semesterCount}">Semester ${semesterCount} GPA:</label>
+                    <input type="text" id="gpa${semesterCount}" class="gpa" placeholder="Enter GPA" oninput="validateInput(this)">
+                `;
+                semestersDiv.appendChild(newSemesterDiv);
+            } else {
+                alert("You cannot add more than 10 semesters.");
+            }
+        }
+
+        function removeSemester() {
+            if (semesterCount > 2) {
+                const semestersDiv = document.getElementById('semesters');
+                semestersDiv.removeChild(semestersDiv.lastChild);
+                semesterCount--;
+            } else {
+                alert("At least two semesters are required.");
+            }
         }
 
         function validateInput(input) {
