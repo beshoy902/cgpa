@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cumulative GPA Calculator</title>
+    <title>Total GPA Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -294,7 +294,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Cumulative GPA Calculator</h1>
+        <h1>Total GPA Calculator</h1>
         <div id="semesters">
             <div class="semester">
                 <label for="gpa1">Semester 1 GPA:</label>
@@ -309,8 +309,9 @@
             <button class="add-semester" onclick="addSemester()">Add Semester</button>
             <button class="remove-semester" onclick="removeSemester()">Remove Semester</button>
         </div>
-        <button class="calculate" onclick="calculateGPA()">Calculate Cumulative GPA</button>
+        <button class="calculate" onclick="calculateGPA()">Calculate Total GPA</button>
         <div class="result" id="result"></div>
+        <br>
    
      <div class="content">
         <div class="benefits">
@@ -385,41 +386,16 @@
 </svg>
             </button>
             </a>
-            
-            
-            
         </div>
         <div class="basic-marquee basic-marquee-2">
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         </div>
         </div>
-    
-
-
-
-
-
-
  </div>
     </div>
-    <footer>&copy; 2024 Beshoy Ashraf</footer>
+    <footer>&copy; 2024 Beshoy Ashraf. All rights reserved.</footer>
 
     <script>
         let semesterCount = 2;
-
         function addSemester() {
             if (semesterCount < 10) {
                 semesterCount++;
